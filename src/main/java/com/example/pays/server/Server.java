@@ -1,13 +1,14 @@
 package com.example.pays.server;
 
-import java.net.http.HttpRequest;
-import java.rmi.RemoteException;
+
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 class Server {
-    public static void main(String[] args) throws RemoteException {
+    public static void main(String[] args) throws Exception {
+
         Registry registry = LocateRegistry.createRegistry(1099);
+        registry.rebind("countryService", new CountryServiceImplement());
 
     }
 }

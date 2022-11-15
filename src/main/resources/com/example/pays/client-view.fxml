@@ -29,7 +29,7 @@
             </MFXFontIcon>
          </children>
       </HBox>
-      <VBox prefHeight="726.0" prefWidth="348.0" style="-fx-background-color: #0f2633; -fx-background-radius: 0 10 10 0; -fx-background-insets: -1 -5 -1 -1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="726.0" prefWidth="348.0" style="-fx-background-color: #0f2633; -fx-background-radius: 0 0 0 0; -fx-background-insets: -1 -5 -1 -1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="64.0" prefWidth="348.0" spacing="10.0">
                <padding>
