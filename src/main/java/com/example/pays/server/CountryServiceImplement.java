@@ -13,11 +13,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.time.Duration;
 import java.util.List;
 
-public class CountryServiceImplement extends UnicastRemoteObject implements CountryService {
+public class CountryServiceImplement  implements CountryService {
 
-    public CountryServiceImplement() throws RemoteException {
-        super();
-    }
 
     @Override
     public List<CountryModel> countries() throws Exception {
