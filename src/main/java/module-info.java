@@ -2,9 +2,12 @@ module com.example.pays {
     requires javafx.controls;
     requires javafx.fxml;
     requires MaterialFX;
-    requires VirtualizedFX;
+    requires java.rmi;
+    requires java.net.http;
+
+    opens com.example.pays;
+    opens com.example.pays.server;
+    opens com.example.pays.controller;
 
 
-    opens com.example.pays to javafx.fxml;
-    exports com.example.pays;
 }
