@@ -43,19 +43,9 @@ public class ClientController implements Initializable {
             stage.setX(event.getScreenX() + xOffset);
             stage.setY(event.getScreenY() + yOffset);
         });
-
-        try {
-            this.getData();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public void getData() throws Exception {
-        String url_service = "rmi://localhost:1099/countryService";
-        CountryService countryService = (CountryService) Naming.lookup(url_service);
-
-        System.out.println(countryService.countries());
 
     }
 
