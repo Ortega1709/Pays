@@ -11,10 +11,10 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
-public class Client extends Application {
+public class ClientUI extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Client.class.getResource("client-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ClientUI.class.getResource("client-view.fxml"));
         fxmlLoader.setControllerFactory(c -> new ClientController(stage));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CountryService extends Remote {
 
-    public List<CountryModel> countries() throws Exception;
+    public void countries() throws Exception;
 
 
 }

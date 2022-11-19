@@ -1,13 +1,19 @@
 package com.example.pays.server;
 
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
-import com.example.pays.model.CountryModel;
+public class Server {
+    public void startServer() {
 
-import java.util.List;
-
-class Server {
-    public static void main(String[] args) throws Exception {
-
-        List<CountryModel> countryModels = new CountryServiceImplement().countries();
+        try {
+            Registry registry = LocateRegistry.createRegistry(1099);
+            registry.rebind("countryInfo", new CountryServiceImplement());
+            System.out.println("Server started ...");
+        } catch (RemoteException e) {
+            System.out.println(e);
+        }
     }
+
 }

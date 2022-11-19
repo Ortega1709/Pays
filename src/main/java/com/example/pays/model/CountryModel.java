@@ -3,14 +3,14 @@ package com.example.pays.model;
 
 public class CountryModel {
 
-    public String cca3;
-    public boolean independent;
+/*    public String cca3;
+    public boolean independent; */
     public String region;
-    public double area;
-    public int population;
+/*    public double area;
+    public int population; */
 
 
-    public String getCca3() {
+/*    public String getCca3() {
         return cca3;
     }
 
@@ -24,7 +24,7 @@ public class CountryModel {
 
     public void setIndependent(boolean independent) {
         this.independent = independent;
-    }
+    }*/
 
     public String getRegion() {
         return region;
@@ -34,7 +34,7 @@ public class CountryModel {
         this.region = region;
     }
 
-    public double getArea() {
+/*    public double getArea() {
         return area;
     }
 
@@ -49,4 +49,6 @@ public class CountryModel {
     public void setPopulation(int population) {
         this.population = population;
     }
+
+ */
 }
