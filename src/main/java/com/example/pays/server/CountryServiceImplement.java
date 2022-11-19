@@ -26,7 +26,7 @@ public class CountryServiceImplement extends UnicastRemoteObject implements Coun
         System.out.println("Country");
         Gson gson = new Gson();
         HttpRequest httpRequest = HttpRequest.newBuilder()
-                .uri(new URI("https://restcountries.com/v3.1/all"))
+                .uri(URI.create("https://restcountries.com/v3.1/all"))
                 .GET()
                 .build();
 

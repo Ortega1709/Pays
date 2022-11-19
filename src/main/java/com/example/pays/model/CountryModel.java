@@ -1,21 +1,33 @@
 package com.example.pays.model;
 
 
+import com.google.gson.annotations.SerializedName;
+
 public class CountryModel {
 
-/*    public String cca3;
-    public boolean independent; */
-    public String region;
-/*    public double area;
-    public int population; */
+    @SerializedName("independent")
+    private boolean independent;
 
+    @SerializedName("cca3")
+    private String cca3;
 
-/*    public String getCca3() {
+    @SerializedName("area")
+    private double area;
+
+    public String getCca3() {
         return cca3;
     }
 
     public void setCca3(String cca3) {
         this.cca3 = cca3;
+    }
+
+    public double getArea() {
+        return area;
+    }
+
+    public void setArea(double area) {
+        this.area = area;
     }
 
     public boolean isIndependent() {
@@ -24,31 +36,6 @@ public class CountryModel {
 
     public void setIndependent(boolean independent) {
         this.independent = independent;
-    }*/
-
-    public String getRegion() {
-        return region;
     }
-
-    public void setRegion(String region) {
-        this.region = region;
-    }
-
-/*    public double getArea() {
-        return area;
-    }
-
-    public void setArea(double area) {
-        this.area = area;
-    }
-
-    public int getPopulation() {
-        return population;
-    }
-
-    public void setPopulation(int population) {
-        this.population = population;
-    }
-
- */
 }
+

@@ -1,7 +1,9 @@
 package com.example.pays.controller;
 
+import com.example.pays.model.CountryModel;
 import com.example.pays.server.CountryServiceImplement;
 import com.example.pays.service.CountryService;
+import com.google.gson.Gson;
 import io.github.palexdev.materialfx.font.MFXFontIcon;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -10,6 +12,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.io.UTFDataFormatException;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -23,6 +28,7 @@ import java.rmi.RemoteException;
 import java.security.SecurityPermission;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
 
 public class ClientController implements Initializable {
 
@@ -52,16 +58,21 @@ public class ClientController implements Initializable {
             stage.setY(event.getScreenY() + yOffset);
         });
 
-        try {
-            HttpRequest httpRequest = HttpRequest.newBuilder()
-                    .uri(new URI("https://restcountries.com/v3.1/all"))
-                    .GET()
-                    .build();
+        HttpRequest httpRequest = HttpRequest.newBuilder()
+                .uri(URI.create("https://restcountries.com/v3/all"))
+                .version(HttpClient.Version.HTTP_2)
+                .GET()
+                .build();
 
-            HttpClient httpClient = HttpClient.newHttpClient();
-            HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-            System.out.println(new String(httpResponse.body().getBytes(), "UTF-8"));
-        }catch (Exception e) {
+        try{
+            HttpResponse<String> completableFuture = HttpClient.newBuilder()
+                    .build().send(httpRequest, HttpResponse.BodyHandlers.ofString());
+
+            String newResponse = completableFuture.body().replaceAll("\\P{Print}", "");
+            CountryModel[] countryModels = new Gson().fromJson(newResponse, CountryModel[].class);
+            for (int i = 0; i < countryModels.length; i++)
+                System.out.println(countryModels[i].getCca3());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
