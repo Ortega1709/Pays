@@ -132,7 +132,7 @@ public class ClientController implements Initializable {
     // fetch data from api of countries
     public void initializeData() throws Exception {
 
-        Registry registry = LocateRegistry.getRegistry("192.168.164.163", 1099);
+        LocateRegistry.getRegistry("192.168.164.163", 1099);
         CountryService countryService = (CountryService) Naming.lookup("countryInfo");
         CountryModel[] countryModels = countryService.countries();
 
