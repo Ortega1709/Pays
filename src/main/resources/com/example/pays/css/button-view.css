@@ -1,0 +1,14 @@
+
+.outline-button {
+    -fx-background-color: transparent;
+    -fx-border-color:  white;
+    -fx-border-radius: 3;
+
+    -fx-text-fill: white;
+}
+
+.outline-button:hover,
+.outline-button:focused {
+    -fx-background-color:  #0f2633;
+    -fx-text-fill: white;
+}
