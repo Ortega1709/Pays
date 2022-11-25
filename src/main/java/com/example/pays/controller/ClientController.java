@@ -21,6 +21,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -79,6 +80,12 @@ public class ClientController implements Initializable {
         this.stage = stage;
     }
 
+    // function select item
+    @FXML
+    void onClickItem(MouseEvent event) {
+        this.displayDetailsData(listCountry.getSelectionModel().getSelectedValues().get(0));
+    }
+
     // initializer
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -125,7 +132,6 @@ public class ClientController implements Initializable {
     // fetch data from api of countries
     public void initializeData() throws Exception {
 
-        System.out.println("test");
         Registry registry = LocateRegistry.getRegistry("192.168.164.163", 1099);
         CountryService countryService = (CountryService) Naming.lookup("countryInfo");
         CountryModel[] countryModels = countryService.countries();
@@ -144,29 +150,38 @@ public class ClientController implements Initializable {
         listCountry.setCellFactory(countryModel -> new CountryModelCellFactory(listCountry, countryModel));
         listCountry.features().enableBounceEffect();
 
-        System.out.println(countryModels[0].getFlags().getPng());
 
-        displayDetailsData(countryModels[0], countryModels);
+        displayDetailsData(countryModels[4]);
 
     }
 
     // display details data
-    public void displayDetailsData(CountryModel countryModel, CountryModel[] countryModels) {
+    public void displayDetailsData(CountryModel countryModel) {
 
         Image image = new Image(countryModel.getFlags().getPng());
         imageViewDetails.setImage(image);
+
         officialName.setText(countryModel.getTranslations().getFra().getOfficial());
         commonName.setText(countryModel.getTranslations().getFra().getCommon());
-        capitalName.setText(countryModel.getCapital().get(0));
+
+        capitalName.setText(countryModel
+                .getCapital().get(0) == null
+                ? countryModel.getTranslations().getFra().getCommon(): countryModel.getCapital().get(0));
+
         nbrPopulation.setText(countryModel.getPopulation().toString());
         area.setText(String.valueOf(countryModel.getArea()));
-        population.setText(countryModel.getDemonyms().getEng().getM());
+        population.setText(
+                countryModel.getDemonyms()
+                        .getFra() == null
+                        ? countryModel.getDemonyms().getEng().getM() : countryModel.getDemonyms().getFra().getM());
+
         independent.setText(String.valueOf(countryModel.isIndependent()));
-        continentName.setText(toFrenchContinent(countryModel.getContinents().get(0).toString()));
+        continentName.setText(toFrenchContinent(countryModel.getContinents().get(0)));
 
-        ObservableList<String> borders = FXCollections.observableArrayList(countryModel.getBorders());
-        listViewBorder.setItems(borders);
-
+        if (countryModel.getBorders() != null) {
+            ObservableList<String> borders = FXCollections.observableArrayList(countryModel.getBorders());
+            listViewBorder.setItems(borders);
+        }
     }
 
     // convert continent's name in French
@@ -177,7 +192,8 @@ public class ClientController implements Initializable {
                 ? "Afrique": continent.equals("Europe")
                 ? "Europe": continent.equals("South America")
                 ? "Amérique du sud": continent.equals("North America")
-                ? "Amérique du nord": "";
+                ? "Amérique du nord": continent.equals("Oceania")
+                ? "Océanie": "";
 
     }
 

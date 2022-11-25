@@ -93,7 +93,7 @@
                   </GridPane>
                </children>
             </HBox>
-            <MFXListView id="custList" fx:id="listCountry" depthLevel="LEVEL0" prefHeight="541.0" prefWidth="338.0" style="-fx-background-color: #0f2633;" stylesheets="@css/list-view.css">
+            <MFXListView id="custList" fx:id="listCountry" depthLevel="LEVEL0" onMouseClicked="#onClickItem" prefHeight="541.0" prefWidth="338.0" style="-fx-background-color: #0f2633;" stylesheets="@css/list-view.css">
                <VBox.margin>
                   <Insets bottom="18.0" left="18.0" right="18.0" top="18.0" />
                </VBox.margin>

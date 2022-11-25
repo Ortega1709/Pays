@@ -9,6 +9,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import com.example.pays.server.*;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 
 public class ServerController implements Initializable {
 
@@ -23,6 +26,9 @@ public class ServerController implements Initializable {
 
     @FXML
     public Label statusLabel;
+
+    @FXML
+    public Pane statusPoint;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -43,6 +49,7 @@ public class ServerController implements Initializable {
             statusLabel.setText("Server starting ...");
             new Server().startServer(ip_address, port);
             statusLabel.setText("Server started ...");
+            statusLabel.setTextFill(Paint.valueOf("#51db18"));
 
         }
     }
@@ -52,6 +59,7 @@ public class ServerController implements Initializable {
 
         new Server().stopServer();
         statusLabel.setText("Server stopped");
+        statusLabel.setTextFill(Paint.valueOf("#d91818"));
     }
 
 
