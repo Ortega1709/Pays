@@ -1,6 +1,7 @@
 module com.example.pays {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.web;
     requires MaterialFX;
     requires VirtualizedFX;
     requires java.rmi;

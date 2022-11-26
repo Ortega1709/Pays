@@ -24,6 +24,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -82,6 +84,9 @@ public class ClientController implements Initializable {
     public Pane detailsPane;
     @FXML
     public MFXButton btnBack;
+
+    @FXML
+    public WebView googleMaps;
 
     // constructor
     public ClientController(Stage stage) {
@@ -161,7 +166,7 @@ public class ClientController implements Initializable {
     // fetch data from api of countries
      void initializeData() throws Exception {
 
-        LocateRegistry.getRegistry("192.168.50.163", 1099);
+        LocateRegistry.getRegistry("192.168.33.163", 1099);
         CountryService countryService = (CountryService) Naming.lookup("countryInfo");
         CountryModel[] countryModels = countryService.countries();
 
@@ -221,6 +226,9 @@ public class ClientController implements Initializable {
             ObservableList<String> borders = FXCollections.observableArrayList(countryModel.getBorders());
             listViewBorder.setItems(borders);
         }
+
+        WebEngine webEngine = googleMaps.getEngine();
+        webEngine.load(countryModel.getMaps().getGoogleMaps());
 
     }
 
