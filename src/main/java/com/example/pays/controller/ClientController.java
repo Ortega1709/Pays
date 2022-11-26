@@ -90,6 +90,7 @@ public class ClientController implements Initializable {
 
     // constructor
     public ClientController(Stage stage) {
+
         this.stage = stage;
     }
 
