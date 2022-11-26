@@ -57,7 +57,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <MFXTextField fx:id="ipLabel" floatMode="BORDER" floatingText="IP Address" prefHeight="50.0" prefWidth="274.0" style="-mfx-main: #0f2633;">
+                        <MFXTextField fx:id="ipLabel" floatingText="IP Address" prefHeight="50.0" prefWidth="274.0" style="-mfx-main: #0f2633;">
                            <GridPane.margin>
                               <Insets right="5.0" />
                            </GridPane.margin>
@@ -65,7 +65,7 @@
                               <Color red="0.05882352963089943" green="0.14901961386203766" blue="0.20000000298023224" opacity="0.8700000047683716" />
                            </textFill>
                         </MFXTextField>
-                        <MFXTextField fx:id="portLabel" floatMode="BORDER" floatingText="Port" prefHeight="50.0" prefWidth="194.0" style="-mfx-main: #0f2633;" GridPane.columnIndex="1">
+                        <MFXTextField fx:id="portLabel" floatingText="Port" prefHeight="50.0" prefWidth="194.0" style="-mfx-main: #0f2633;" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>

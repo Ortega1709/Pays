@@ -3,14 +3,15 @@ package com.example.pays.controller;
 import com.example.pays.model.CountryModel;
 import com.example.pays.service.CountryService;
 import com.google.gson.Gson;
-import io.github.palexdev.materialfx.controls.MFXListView;
-import io.github.palexdev.materialfx.controls.MFXScrollPane;
+import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXListCell;
 import io.github.palexdev.materialfx.font.MFXFontIcon;
 import io.github.palexdev.materialfx.utils.others.FunctionalStringConverter;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.SnapshotParameters;
@@ -19,9 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -75,20 +74,38 @@ public class ClientController implements Initializable {
     public Label independent;
     @FXML
     public Label population;
+    @FXML
+    public MFXTextField searchBar;
+    @FXML
+    public BorderPane homePane;
+    @FXML
+    public Pane detailsPane;
+    @FXML
+    public MFXButton btnBack;
 
+    // constructor
     public ClientController(Stage stage) {
         this.stage = stage;
-    }
-
-    // function select item
-    @FXML
-    void onClickItem(MouseEvent event) {
-        this.displayDetailsData(listCountry.getSelectionModel().getSelectedValues().get(0));
     }
 
     // initializer
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        moveScreen();
+
+        initializeImageClip();
+
+        try {
+            initializeData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    // move screen
+    void moveScreen() {
 
         btnClose.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Platform.exit());
         windowHeader.setOnMousePressed(event -> {
@@ -100,19 +117,31 @@ public class ClientController implements Initializable {
             stage.setY(event.getScreenY() + yOffset);
         });
 
-        initializeImageClip();
+    }
 
-        try {
-            initializeData();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @FXML
+    void onClickBack(ActionEvent event) {
+        btnBack.setVisible(false);
+        homePane.setVisible(true);
+        detailsPane.setVisible(false);
+    }
 
+    // function select item
+    @FXML
+    void onClickItem(MouseEvent event) {
+
+        btnBack.setVisible(true);
+        homePane.setVisible(false);
+        detailsPane.setVisible(true);
+        listViewDetail.setVisible(false);
+        this.displayDetailsData(listCountry.getSelectionModel().getSelectedValues().get(0));
+        listViewDetail.setVisible(true);
 
     }
 
+
     // initialize rounded image in detail view
-    public void initializeImageClip() {
+     void initializeImageClip() {
 
         Rectangle rectangle = new Rectangle(
                 imageViewDetails.getFitWidth(), imageViewDetails.getFitHeight()
@@ -130,12 +159,11 @@ public class ClientController implements Initializable {
     }
 
     // fetch data from api of countries
-    public void initializeData() throws Exception {
+     void initializeData() throws Exception {
 
-        LocateRegistry.getRegistry("192.168.164.163", 1099);
+        LocateRegistry.getRegistry("192.168.50.163", 1099);
         CountryService countryService = (CountryService) Naming.lookup("countryInfo");
         CountryModel[] countryModels = countryService.countries();
-
 
         this.countries= FXCollections.observableArrayList(countryModels);
         StringConverter<CountryModel> converter = FunctionalStringConverter
@@ -145,18 +173,30 @@ public class ClientController implements Initializable {
                                 .getFra()
                                 .getCommon());
 
-        listCountry.setItems(this.countries);
+        // create a filter list
+        FilteredList<CountryModel> filteredList = new FilteredList<>(this.countries, p -> true);
+
+        listCountry.setItems(filteredList);
         listCountry.setConverter(converter);
         listCountry.setCellFactory(countryModel -> new CountryModelCellFactory(listCountry, countryModel));
         listCountry.features().enableBounceEffect();
 
-
-        displayDetailsData(countryModels[4]);
+        // filter search bar
+        searchBar.textProperty().addListener((obs, oldValue, newValue) -> {
+             filteredList.setPredicate(p -> p
+                     .getTranslations()
+                     .getFra()
+                     .getCommon()
+                     .toLowerCase()
+                     .contains(newValue
+                             .toLowerCase()
+                             .trim()));
+         });
 
     }
 
     // display details data
-    public void displayDetailsData(CountryModel countryModel) {
+     void displayDetailsData(CountryModel countryModel) {
 
         Image image = new Image(countryModel.getFlags().getPng());
         imageViewDetails.setImage(image);
@@ -165,8 +205,7 @@ public class ClientController implements Initializable {
         commonName.setText(countryModel.getTranslations().getFra().getCommon());
 
         capitalName.setText(countryModel
-                .getCapital().get(0) == null
-                ? countryModel.getTranslations().getFra().getCommon(): countryModel.getCapital().get(0));
+                .getCapital() != null ? countryModel.getCapital().get(0): countryModel.getTranslations().getFra().getCommon());
 
         nbrPopulation.setText(countryModel.getPopulation().toString());
         area.setText(String.valueOf(countryModel.getArea()));
@@ -182,10 +221,11 @@ public class ClientController implements Initializable {
             ObservableList<String> borders = FXCollections.observableArrayList(countryModel.getBorders());
             listViewBorder.setItems(borders);
         }
+
     }
 
     // convert continent's name in French
-    public String toFrenchContinent(String continent) {
+     String toFrenchContinent(String continent) {
 
         return continent.equals("Asia")
                 ? "Asie": continent.equals("Africa")
@@ -203,7 +243,7 @@ public class ClientController implements Initializable {
         public CountryModelCellFactory(MFXListView<CountryModel> listView, CountryModel data) {
             super(listView, data);
 
-            flagIcon = new MFXFontIcon("mfx-map", 18);
+            flagIcon = new MFXFontIcon("mfx-map", 0);
             flagIcon.setColor(Color.TRANSPARENT);
             render(data);
         }

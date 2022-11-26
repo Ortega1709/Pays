@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXListView?>
 <?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
@@ -8,6 +9,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -24,6 +26,22 @@
             <Insets right="10.0" />
          </opaqueInsets>
          <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="555.0" style="-fx-background-color: white;">
+               <children>
+                  <MFXButton fx:id="btnBack" buttonType="RAISED" depthLevel="LEVEL0" onAction="#onClickBack" text="Retour" textFill="#0f2633" visible="false">
+                     <graphic>
+                        <MFXFontIcon description="mfx-angle-left" size="28.0">
+                           <color>
+                              <Color red="0.05882352963089943" green="0.14901961386203766" blue="0.20000000298023224" />
+                           </color>
+                        </MFXFontIcon>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets left="9.0" />
+                     </HBox.margin>
+                  </MFXButton>
+               </children>
+            </HBox>
             <MFXFontIcon fx:id="btnClose" description="mfx-x-alt" size="20.0" style="-fx-background-color: #0f2633">
                <HBox.margin>
                   <Insets right="18.0" />
@@ -38,13 +56,9 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="64.0" prefWidth="348.0" spacing="10.0">
                <padding>
-                  <Insets left="20.0" />
+                  <Insets left="18.0" />
                </padding>
                <children>
-                  <MFXFontIcon description="mfx-map" size="35.0">
-                     <color>
-                        <Color red="1.0" green="1.0" blue="1.0" />
-                     </color></MFXFontIcon>
                   <Label style="-fx-font-weight: bold;" text="Pays du monde" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
@@ -52,65 +66,34 @@
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="348.0">
-               <VBox.margin>
-                  <Insets top="30.0" />
-               </VBox.margin>
-               <children>
-                  <Label prefHeight="18.0" prefWidth="358.0" text="Rechercher un pays" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-               </children>
-               <padding>
-                  <Insets left="20.0" right="20.0" />
-               </padding>
-            </HBox>
             <HBox prefHeight="42.0" prefWidth="348.0">
                <VBox.margin>
-                  <Insets />
+                  <Insets top="35.0" />
                </VBox.margin>
                <padding>
-                  <Insets left="20.0" right="20.0" />
+                  <Insets left="18.0" right="18.0" />
                </padding>
                <children>
-                  <GridPane prefHeight="34.0" prefWidth="315.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="254.6000518798828" minWidth="10.0" prefWidth="225.40003662109376" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="162.3999786376953" minWidth="10.0" prefWidth="72.59996337890624" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <MFXTextField borderGap="5.0" floatMode="DISABLED" floatingTextGap="10.0" prefHeight="34.0" prefWidth="227.0" style="-fx-background-color: #0f2633; -mfx-main: #ffffff;">
-                           <textFill>
-                              <Color red="1.0" green="1.0" blue="1.0" opacity="0.8700000047683716" />
-                           </textFill>
-                        </MFXTextField>
-                     </children>
-                  </GridPane>
+                  <MFXTextField id="customField" fx:id="searchBar" borderGap="6.0" floatingText="Rechercher un pays" floatingTextGap="3.0" prefHeight="34.0" prefWidth="306.0" stylesheets="@css/textfield.css">
+                     <textFill>
+                        <Color red="1.0" green="1.0" blue="1.0" opacity="0.8700000047683716" />
+                     </textFill>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </MFXTextField>
                </children>
             </HBox>
-            <MFXListView id="custList" fx:id="listCountry" depthLevel="LEVEL0" onMouseClicked="#onClickItem" prefHeight="541.0" prefWidth="338.0" style="-fx-background-color: #0f2633;" stylesheets="@css/list-view.css">
+            <MFXListView id="custList" fx:id="listCountry" depthLevel="LEVEL0" onMouseClicked="#onClickItem" prefHeight="557.0" prefWidth="302.0" style="-fx-background-color: #0f2633;" stylesheets="@css/list-view.css">
                <VBox.margin>
                   <Insets bottom="18.0" left="18.0" right="18.0" top="18.0" />
                </VBox.margin>
             </MFXListView>
          </children></VBox>
-      <Pane fx:id="detailsPane" layoutX="353.0" layoutY="40.0" prefHeight="686.0" prefWidth="587.0" style="-fx-background-color: white;">
+      <Pane fx:id="detailsPane" layoutX="353.0" layoutY="40.0" prefHeight="686.0" prefWidth="587.0" style="-fx-background-color: white;" visible="false">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="587.0" style="-fx-background-color: white;">
                <children>
-                  <MFXFontIcon description="mfx-info-circle-filled" size="15.0">
-                     <HBox.margin>
-                        <Insets left="18.0" />
-                     </HBox.margin>
-                     <color>
-                        <Color red="0.05882352963089943" green="0.14901961386203766" blue="0.20000000298023224" />
-                     </color>
-                  </MFXFontIcon>
                   <Label text="Informations sur le pays " textFill="#0f2633">
                      <font>
                         <Font name="System Bold" size="15.0" />
@@ -334,5 +317,17 @@
                </content>
             </MFXScrollPane>
          </children></Pane>
+      <BorderPane fx:id="homePane" layoutX="353.0" layoutY="40.0" prefHeight="678.0" prefWidth="575.0" style="-fx-background-color: white;">
+         <center>
+            <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="BOTTOM_CENTER" layoutX="143.0" layoutY="624.0" prefHeight="48.0" prefWidth="302.0">
+                     <children>
+                        <Label text="Developed by Kabwe Mulunda Ortega" textFill="#0f2633" />
+                     </children></HBox>
+               </children>
+            </Pane>
+         </center>
+      </BorderPane>
    </children>
 </AnchorPane>

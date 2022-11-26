@@ -2,6 +2,7 @@ package com.example.pays.controller;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,8 +28,6 @@ public class ServerController implements Initializable {
     @FXML
     public Label statusLabel;
 
-    @FXML
-    public Pane statusPoint;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -57,9 +56,9 @@ public class ServerController implements Initializable {
     @FXML
     void onStopServer(ActionEvent event) {
 
-        new Server().stopServer();
         statusLabel.setText("Server stopped");
         statusLabel.setTextFill(Paint.valueOf("#d91818"));
+        Platform.exit();
     }
 
 

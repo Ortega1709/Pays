@@ -1,0 +1,10 @@
+
+#customField {
+    -fx-border-color: white;
+    -fx-background-color:  #0f2633;
+}
+
+#customField .floating-text {
+    -fx-text-fill: white;
+    -fx-background-color: #0f2633;
+}
